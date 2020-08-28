@@ -77,3 +77,16 @@ creates a `tsconfig.json` which reads
   }
 }
 ```
+
+### When does tsc ignore tsconfig.json?
+
+As soon as you define a ts input file, tsconfig.json is ignored.
+
+```bash
+yarn run tsc index.ts
+```
+As soon as you do not define a ts input file, tsconfig.json is not ignored.
+
+```bash
+yarn run tsc
+```
