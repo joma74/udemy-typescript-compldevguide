@@ -1,0 +1,17 @@
+{
+  "name": "typescript-compldevguide",
+  "version": "0.0.1",
+  "description": "Playback after https://www.udemy.com/course/typescript-the-complete-developers-guide",
+  "main": "index.js",
+  "author": "joma74@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.6.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2",
+    "typescript-json-validator": "^2.4.2"
+  },
+  "dependencies": {
+    "axios": "^0.20.0"
+  }
+}
