@@ -7,12 +7,12 @@ const URL = "https://jsonplaceholder.typicode.com/todos/1"
 axios
 	.get(URL)
 	.then((rs) => {
-		const todo: TypicodeTodoResponse = validateTypicodeTodoResponse(rs.data)
-		const ID = todo.id
+		const todo = validateTypicodeTodoResponse(rs.data) as TypicodeTodoResponse
+		const id = todo.id
 		const title = todo.title
 		const completed = todo.completed
 		console.log(
-			`The Todo with ID: ${ID}, title: ${title}, completed: ${completed}`,
+			`The todo with id: ${id}, title: ${title}, completed: ${completed}`,
 		)
 	})
 	.catch((e) => {
