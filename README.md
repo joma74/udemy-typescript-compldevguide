@@ -5,7 +5,9 @@ Just the base setup. See branches
 ```
 yarn run tsc --init
 ```
+
 creates a `tsconfig.json` which reads
+
 ```js
 {
   "compilerOptions": {
@@ -23,7 +25,7 @@ creates a `tsconfig.json` which reads
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
-    // "outDir": "./",                        /* Redirect output structure to the directory. */
+    "outDir": "./",                        /* Redirect output structure to the directory. */
     // "rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */
@@ -78,6 +80,16 @@ creates a `tsconfig.json` which reads
 }
 ```
 
+## References
+
+### Understanding TypeScript Configuration Options
+
+Walks through _each_ `tsconfig.json`. Included is for each an example, which is available on it's github project(see link below).
+
+- https://drive.google.com/file/d/1RsjmMsdeK8Ni79jC8JyVoMOVQADF3oIP/view?usp=sharing
+- https://medium.com/javascript-in-plain-english/typescript-configuration-options-tsconfig-json-561d4a2ad4b
+- https://github.com/manakuro/typescript-compiler-options-example
+
 ### When does tsc ignore tsconfig.json?
 
 As soon as you define a ts input file, tsconfig.json is ignored.
@@ -85,8 +97,13 @@ As soon as you define a ts input file, tsconfig.json is ignored.
 ```bash
 yarn run tsc index.ts
 ```
+
 As soon as you do not define a ts input file, tsconfig.json is not ignored.
 
 ```bash
 yarn run tsc
 ```
+
+### Why does "yarn run ts-node --emit ." does not emit any JS file?
+
+Dunno
