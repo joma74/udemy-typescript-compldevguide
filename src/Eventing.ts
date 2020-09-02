@@ -12,10 +12,10 @@ export class Eventing {
 	 * @param eventName
 	 * @param callback
 	 */
-	on = (eventName: string, callback: Callback) => {
-		const handlers = this.events[eventName] || []
+	on = (e: string, callback: Callback) => {
+		const handlers = this.events[e] || []
 		handlers.push(callback)
-		this.events[eventName] = handlers
+		this.events[e] = handlers
 	}
 
 	/**
