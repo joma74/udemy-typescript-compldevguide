@@ -4,7 +4,7 @@ import { HasId } from "./types/internal/HasId"
 import { StatusCodes } from "http-status-codes"
 
 export class Sync<T extends HasId> {
-	fetch(id: number): AxiosPromise {
+	fetch = (id: number): AxiosPromise => {
 		return axios
 			.get(`users/${id}`, dbConfig)
 			.then((rs) => {
@@ -15,7 +15,7 @@ export class Sync<T extends HasId> {
 			})
 	}
 
-	save(data: T): AxiosPromise {
+	save = (data: T): AxiosPromise => {
 		const { id } = data
 		if (id) {
 			return axios
