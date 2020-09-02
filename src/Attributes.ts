@@ -4,7 +4,13 @@ export class Attributes<T> {
 	constructor(private data: T) {}
 
 	/**
-	 * At runtime `key in obj solution.
+	 * At runtime `key in obj' check.
+	 *
+	 * Returns `T[string & keyof T] | undefined`, which is
+	 * - not sufficient for a constant/literal parameter
+	 * - sufficient for a variable parameter
+	 *
+	 * to return expected typed results.
 	 *
 	 * Narrowed Return Types are
 	 * - `this.data` becomes `Attributes<T>.data: T`
@@ -16,14 +22,21 @@ export class Attributes<T> {
 	 *
 	 * @param propName
 	 */
-	get = (propName: string) => {
+	getByVariableKey2 = (propName: string) => {
 		if (hasKey(this.data, propName)) {
 			return this.data[propName]
 		}
 	}
 
 	/**
-	 * Has to be called by `get2(propName as keyof UserProps)`
+	 * At runtime no check.
+	 *
+	 * Returns `T[keyof T]`, which is
+	 * - not sufficient for a constant/literal parameter
+	 * - not sufficient for a variable parameter iff called by `get2(propName as keyof UserProps)`
+	 * - breaks for a variable parameter iff called by `get2(propName)`
+	 *
+	 * to return expected typed results.
 	 *
 	 * NOTE
 	 *
@@ -36,7 +49,13 @@ export class Attributes<T> {
 	}
 
 	/**
-	 * Uses `hasOwnProperty` solution.
+	 * At runtime `hasOwnProperty` check.
+	 *
+	 * Returns `T[string & keyof T] | undefined`, which is
+	 * - not sufficient for a constant/literal parameter
+	 * - sufficient for a variable parameter
+	 *
+	 * to return expected typed results.
 	 *
 	 * Narrowed Return Types are
 	 * - `this.data` becomes `Attributes<T>.data: T`
@@ -46,17 +65,24 @@ export class Attributes<T> {
 	 *
 	 * `=>` function captures this
 	 *
-	 * @param propName
+	 * @param key
 	 *
 	 */
-	get3 = (propName: string) => {
-		if (hasKey2(this.data, propName)) {
-			return this.data[propName]
+	getByVariableKey = (key: string) => {
+		if (hasKey2(this.data, key)) {
+			return this.data[key]
 		}
 	}
 
 	/**
-	 * Uses nothing - see signature
+	 * At runtime no check.
+	 *
+	 * Returns `T[K]`, which is
+	 * - sufficient for a constant/literal parameter
+	 * - not sufficient for a variable parameter iff called by `get4(propName as keyof UserProps)`
+	 * - breaks for a variable parameter iff called by `get2(propName)`
+	 *
+	 * to return expected typed results.
 	 *
 	 * NOTE
 	 *
@@ -66,6 +92,29 @@ export class Attributes<T> {
 	 */
 	get4 = <K extends keyof T>(key: K): T[K] => {
 		return this.data[key]
+	}
+
+	/**
+	 * At runtime `hasOwnProperty` check.
+	 *
+	 * Returns `T[K] | undefined`, which is
+	 * - sufficient for a constant/literal parameter
+	 * - not sufficient for a variable parameter iff called by `get5(propName as keyof UserProps)`
+	 * - breaks for a variable parameter iff called by `get2(propName)`
+	 *
+	 * to return expected typed results.
+	 *
+	 * NOTE
+	 *
+	 * `=>` function captures this
+	 *
+	 * @param key
+	 */
+	getByLiteralKey = <K extends keyof T>(key: K): T[K] | undefined => {
+		if (hasKey2(this.data, key)) {
+			return this.data[key]
+		}
+		return undefined
 	}
 
 	/**
