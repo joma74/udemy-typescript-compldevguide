@@ -2,6 +2,8 @@ import { UserProps } from "./types/external/UserProps"
 import { Eventing } from "./Eventing"
 import { Sync } from "./Sync"
 import { Attributes } from "./Attributes"
+import { Event } from "./Event"
+import { isANumber } from "./Utils"
 
 export class User {
 	events: Eventing = new Eventing()
@@ -15,8 +17,8 @@ export class User {
 	 * this is NOT
 	 * USAGE
 	 * ```ts
-	 *  user.on("change", () => {
-	 *      console.log("change called")
+	 *  user.on(Event.change, () => {
+	 *      console.log(`${Event.change} has been called`)
 	 *  })
 	 * ```
 	 */
@@ -29,6 +31,22 @@ export class User {
 	}
 
 	get get() {
-		return this.attributes.get3
+		return this.attributes.getByVariableKey
+	}
+
+	set = (update: UserProps) => {
+		this.attributes.set(update)
+		this.events.trigger(Event.change)
+	}
+
+	fetch = () => {
+		const id = this.attributes.getByLiteralKey("id")
+		if (isANumber(id)) {
+			this.sync.fetch(id).then((data) => {
+				this.set(data) // so we trigger the event
+			})
+		} else {
+			throw new Error("Can not fetch without an id")
+		}
 	}
 }

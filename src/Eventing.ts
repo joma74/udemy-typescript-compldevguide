@@ -1,3 +1,5 @@
+import { Event } from "./Event"
+
 type Callback = () => void
 
 export class Eventing {
@@ -22,7 +24,7 @@ export class Eventing {
 	 *
 	 * @param eventName
 	 */
-	trigger = (eventName: string): void => {
+	trigger = (eventName: Event): void => {
 		const handlers = this.events[eventName]
 		if (handlers && handlers.length > 0) {
 			handlers.forEach((callback) => {
