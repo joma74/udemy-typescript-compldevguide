@@ -13,12 +13,10 @@ export class User {
 	constructor(private data: UserProps) {}
 
 	/**
-	 * WATCH
-	 * this is NOT
 	 * USAGE
 	 * ```ts
-	 *  user.on(Event.change, () => {
-	 *      console.log(`${Event.change} has been called`)
+	 *  user.on(Event.change, (e) => {
+	 *      console.log(`Event "${e}" has been called`)
 	 *  })
 	 * ```
 	 */
