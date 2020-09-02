@@ -34,17 +34,34 @@ export class User {
 
 	set = (update: UserProps) => {
 		this.attributes.set(update)
-		this.events.trigger(Event.change)
+		this.events.trigger(Event.CHANGE)
 	}
 
 	fetch = () => {
 		const id = this.attributes.getByLiteralKey("id")
 		if (isANumber(id)) {
-			this.sync.fetch(id).then((data) => {
-				this.set(data) // so we trigger the event
-			})
+			this.sync
+				.fetch(id)
+				.then((data) => {
+					this.set(data) // so we trigger the event
+				})
+				.catch(() => {
+					this.trigger(Event.ERROR)
+				})
 		} else {
 			throw new Error("Can not fetch without an id")
 		}
+	}
+
+	save = () => {
+		this.sync
+			.save(this.attributes.getAll())
+			.then((newUserProps) => {
+				this.set(newUserProps)
+				this.trigger(Event.SAVE)
+			})
+			.catch(() => {
+				this.trigger(Event.ERROR)
+			})
 	}
 }

@@ -1,3 +1,5 @@
 export enum Event {
-	change = "change",
+	CHANGE = "change",
+	SAVE = "save",
+	ERROR = "error",
 }
