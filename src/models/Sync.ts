@@ -5,9 +5,10 @@ import { StatusCodes } from "http-status-codes"
 import { ISync } from "../types/internal/ISync"
 
 export class Sync<T extends IHasId> implements ISync<T> {
+	constructor(private resourcePath: string) {}
 	fetch = (id: number): AxiosPromise => {
 		return axios
-			.get(`users/${id}`, dbConfig)
+			.get(`${this.resourcePath}/${id}`, dbConfig)
 			.then((rs) => {
 				return rs
 			})
@@ -20,7 +21,7 @@ export class Sync<T extends IHasId> implements ISync<T> {
 		const { id } = data
 		if (id) {
 			return axios
-				.put(`users/${id}`, data, dbConfig)
+				.put(`${this.resourcePath}/${id}`, data, dbConfig)
 				.then((rs) => {
 					if (StatusCodes.OK != rs.status) {
 						throw new Error(`Save PUT request failed with >>${rs.status}<<`)
@@ -32,7 +33,7 @@ export class Sync<T extends IHasId> implements ISync<T> {
 				})
 		} else {
 			return axios
-				.post(`users`, data, dbConfig)
+				.post(`${this.resourcePath}`, data, dbConfig)
 				.then((rs) => {
 					if (StatusCodes.CREATED != rs.status) {
 						throw new Error(`Save POST request failed with >>${rs.status}<<`)

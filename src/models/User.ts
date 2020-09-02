@@ -7,7 +7,7 @@ import { Attributes } from "./Attributes"
 
 export class User extends Model<UserProps> {
 	static build = (attrs: UserProps): User => {
-		return new User(new Attributes(attrs), new Eventing(), new Sync())
+		return new User(new Attributes(attrs), new Eventing(), new Sync("users"))
 	}
 
 	validate = (data: unknown) => {
