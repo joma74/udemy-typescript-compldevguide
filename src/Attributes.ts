@@ -4,10 +4,15 @@ export class Attributes<T> {
 	constructor(private data: T) {}
 
 	/**
-	 * Uses Utils.hasKey(key in obj solution with RT key is keyof O)
+	 * At runtime `key in obj solution.
+	 *
+	 * Narrowed Return Types are
+	 * - `this.data` becomes `Attributes<T>.data: T`
+	 * - `propName` becomes `string & keyof T`)
 	 *
 	 * NOTE
-	 * => function captures this
+	 *
+	 * `=>` function captures this
 	 *
 	 * @param propName
 	 */
@@ -21,7 +26,8 @@ export class Attributes<T> {
 	 * Has to be called by `get2(propName as keyof UserProps)`
 	 *
 	 * NOTE
-	 * => function captures this
+	 *
+	 * `=>` function captures this
 	 *
 	 * @param propName
 	 */
@@ -30,10 +36,15 @@ export class Attributes<T> {
 	}
 
 	/**
-	 * Uses Utils.hasKey2(hasOwnProperty solution with RT key is keyof O)
+	 * Uses `hasOwnProperty` solution.
+	 *
+	 * Narrowed Return Types are
+	 * - `this.data` becomes `Attributes<T>.data: T`
+	 * - `propName` becomes `string & keyof T`)
 	 *
 	 * NOTE
-	 * => function captures this
+	 *
+	 * `=>` function captures this
 	 *
 	 * @param propName
 	 *
@@ -48,7 +59,8 @@ export class Attributes<T> {
 	 * Uses nothing - see signature
 	 *
 	 * NOTE
-	 * => function captures this
+	 *
+	 * `=>` function captures this
 	 *
 	 * @param key
 	 */
@@ -59,7 +71,8 @@ export class Attributes<T> {
 	/**
 	 *
 	 * NOTE
-	 * => function captures this
+	 *
+	 * `=>` function captures this
 	 *
 	 * @param update
 	 */
