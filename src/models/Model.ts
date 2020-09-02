@@ -1,17 +1,18 @@
-import { UserProps } from "./types/external/UserProps"
-import { Eventing } from "./Eventing"
-import { Sync } from "./Sync"
-import { Attributes } from "./Attributes"
 import { Event } from "./Event"
-import { isANumber } from "./Utils"
-import { default as validateUserProps } from "./types/external/UserProps.validator"
+import { isANumber } from "../Utils"
+import { IModelAttributes } from "../types/internal/IModelAttributes"
+import { ISync } from "../types/internal/ISync"
+import { IEventing } from "../types/internal/IEventing"
+import { IHasId } from "../types/internal/IHasId"
 
-export class User {
-	events: Eventing = new Eventing()
-	sync: Sync<UserProps> = new Sync()
-	attributes: Attributes<UserProps> = new Attributes(this.data)
+export abstract class Model<T extends IHasId> {
+	constructor(
+		private attributes: IModelAttributes<T>,
+		private events: IEventing,
+		private sync: ISync<T>,
+	) {}
 
-	constructor(private data: UserProps) {}
+	abstract validate(data: unknown): T
 
 	/**
 	 * USAGE
@@ -33,7 +34,7 @@ export class User {
 		return this.attributes.getByVariableKey
 	}
 
-	set = (update: UserProps) => {
+	set = (update: T) => {
 		this.attributes.set(update)
 		this.events.trigger(Event.CHANGE)
 	}
@@ -43,10 +44,11 @@ export class User {
 		if (isANumber(id)) {
 			this.sync
 				.fetch(id)
-				.then((data) => {
-					this.set(validateUserProps(data)) // so we trigger the event
+				.then((rs) => {
+					this.set(this.validate(rs.data)) // so we trigger the event
 				})
-				.catch(() => {
+				.catch((e) => {
+					console.log(e)
 					this.trigger(Event.ERROR)
 				})
 		} else {
@@ -57,11 +59,12 @@ export class User {
 	save = () => {
 		this.sync
 			.save(this.attributes.getAll())
-			.then((newData) => {
-				this.set(validateUserProps(newData))
+			.then((rs) => {
+				this.set(this.validate(rs.data))
 				this.trigger(Event.SAVE)
 			})
-			.catch(() => {
+			.catch((e) => {
+				console.log(e)
 				this.trigger(Event.ERROR)
 			})
 	}

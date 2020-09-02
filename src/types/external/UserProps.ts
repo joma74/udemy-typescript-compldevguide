@@ -1,6 +1,6 @@
-import { HasId } from "../internal/HasId"
+import { IHasId } from "../internal/IHasId"
 
-export interface UserProps extends HasId {
+export interface UserProps extends IHasId {
 	id?: number
 	name?: string
 	age?: number

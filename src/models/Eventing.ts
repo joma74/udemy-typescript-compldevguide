@@ -1,8 +1,9 @@
 import { Event } from "./Event"
+import { IEventing } from "../types/internal/IEventing"
 
 type Callback = (e: Event) => void
 
-export class Eventing {
+export class Eventing implements IEventing {
 	events: { [key: string]: Callback[] } = {}
 
 	/**

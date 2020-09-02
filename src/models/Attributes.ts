@@ -1,4 +1,4 @@
-import { hasKey, hasKey2 } from "./Utils"
+import { hasKey, hasKey2 } from "../Utils"
 
 export class Attributes<T> {
 	constructor(private data: T) {}

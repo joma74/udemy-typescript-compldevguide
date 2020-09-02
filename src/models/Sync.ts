@@ -1,14 +1,15 @@
 import axios, { AxiosPromise } from "axios"
-import { dbConfig } from "./DBAxiosConfig"
-import { HasId } from "./types/internal/HasId"
+import { dbConfig } from "../DBAxiosConfig"
+import { IHasId } from "../types/internal/IHasId"
 import { StatusCodes } from "http-status-codes"
+import { ISync } from "../types/internal/ISync"
 
-export class Sync<T extends HasId> {
+export class Sync<T extends IHasId> implements ISync<T> {
 	fetch = (id: number): AxiosPromise => {
 		return axios
 			.get(`users/${id}`, dbConfig)
 			.then((rs) => {
-				return rs.data
+				return rs
 			})
 			.catch((error) => {
 				throw error
@@ -24,10 +25,10 @@ export class Sync<T extends HasId> {
 					if (StatusCodes.OK != rs.status) {
 						throw new Error(`Save PUT request failed with >>${rs.status}<<`)
 					}
-					return rs.data
+					return rs
 				})
-				.catch((error) => {
-					throw error
+				.catch((e) => {
+					throw e
 				})
 		} else {
 			return axios
@@ -36,10 +37,10 @@ export class Sync<T extends HasId> {
 					if (StatusCodes.CREATED != rs.status) {
 						throw new Error(`Save POST request failed with >>${rs.status}<<`)
 					}
-					return rs.data
+					return rs
 				})
-				.catch((error) => {
-					throw error
+				.catch((e) => {
+					throw e
 				})
 		}
 	}
