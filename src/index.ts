@@ -1,4 +1,10 @@
-// import { User } from "./User"
+import { User } from "./User"
+import { Event } from "./Event"
 
-// let user = new User({})
-// user.set({ name: "NEW NAME", age: 999 })
+let user = new User({ id: 1 })
+user.on(Event.change, (e) => {
+	console.log(`event "${e}" has been called`)
+	console.log(user)
+})
+
+user.fetch()
