@@ -4,6 +4,7 @@ import { Sync } from "./Sync"
 import { Attributes } from "./Attributes"
 import { Event } from "./Event"
 import { isANumber } from "./Utils"
+import { default as validateUserProps } from "./types/external/UserProps.validator"
 
 export class User {
 	events: Eventing = new Eventing()
@@ -43,7 +44,7 @@ export class User {
 			this.sync
 				.fetch(id)
 				.then((data) => {
-					this.set(data) // so we trigger the event
+					this.set(validateUserProps(data)) // so we trigger the event
 				})
 				.catch(() => {
 					this.trigger(Event.ERROR)
@@ -56,8 +57,8 @@ export class User {
 	save = () => {
 		this.sync
 			.save(this.attributes.getAll())
-			.then((newUserProps) => {
-				this.set(newUserProps)
+			.then((newData) => {
+				this.set(validateUserProps(newData))
 				this.trigger(Event.SAVE)
 			})
 			.catch(() => {

@@ -1,23 +1,21 @@
-import axios from "axios"
+import axios, { AxiosPromise } from "axios"
 import { dbConfig } from "./DBAxiosConfig"
-import { default as validateUserProps } from "./types/external/UserProps.validator"
-import { UserProps } from "./types/external/UserProps"
 import { HasId } from "./types/internal/HasId"
 import { StatusCodes } from "http-status-codes"
 
 export class Sync<T extends HasId> {
-	fetch(id: number): Promise<UserProps> {
+	fetch(id: number): AxiosPromise {
 		return axios
 			.get(`users/${id}`, dbConfig)
 			.then((rs) => {
-				return validateUserProps(rs.data)
+				return rs.data
 			})
 			.catch((error) => {
 				throw error
 			})
 	}
 
-	save(data: T): Promise<UserProps> {
+	save(data: T): AxiosPromise {
 		const { id } = data
 		if (id) {
 			return axios
@@ -26,7 +24,7 @@ export class Sync<T extends HasId> {
 					if (StatusCodes.OK != rs.status) {
 						throw new Error(`Save PUT request failed with >>${rs.status}<<`)
 					}
-					return validateUserProps(rs.data)
+					return rs.data
 				})
 				.catch((error) => {
 					throw error
@@ -38,7 +36,7 @@ export class Sync<T extends HasId> {
 					if (StatusCodes.CREATED != rs.status) {
 						throw new Error(`Save POST request failed with >>${rs.status}<<`)
 					}
-					return validateUserProps(rs.data)
+					return rs.data
 				})
 				.catch((error) => {
 					throw error
