@@ -138,10 +138,10 @@ type ObjectWithKey<O extends object, K extends PropertyKey> = K extends keyof O
 	? O
 	: O & Record<K, unknown>
 
-export function isNumber(value: unknown): value is number {
+export function isANumber(value: unknown): value is number {
 	return "number" === typeof value
 }
 
-export function isString(value: unknown): value is string {
+export function isAString(value: unknown): value is string {
 	return "string" === typeof value
 }
