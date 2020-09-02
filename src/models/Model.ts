@@ -21,15 +21,29 @@ export abstract class Model<T extends IHasId> {
 	 *      console.log(`Event "${e}" has been called`)
 	 *  })
 	 * ```
+	 *
+	 * NOTE
+	 *
+	 * `get` makes sure it is defined after `this.events` have been intialized
 	 */
 	get on() {
 		return this.events.on
 	}
 
+	/**
+	 * NOTE
+	 *
+	 * `get` makes sure it is defined after `this.events` have been intialized
+	 */
 	get trigger() {
 		return this.events.trigger
 	}
 
+	/**
+	 * NOTE
+	 *
+	 * `get` makes sure it is defined after `this.attributes` have been intialized
+	 */
 	get get() {
 		return this.attributes.getByVariableKey
 	}
