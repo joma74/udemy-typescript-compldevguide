@@ -1,10 +1,8 @@
-import { User } from "./models/User"
 import { Event } from "./models/Event"
+import { User } from "./models/User"
 
-let user = User.build({ id: 14, name: "3NU3", age: 111 })
-user.on(Event.SAVE, (e) => {
-	console.log(`event "${e}" has been called`)
-	console.log(user)
+const users = User.buildUserCollection()
+users.on(Event.CHANGE, (e) => {
+	console.log(users)
 })
-
-user.save()
+users.fetch()
