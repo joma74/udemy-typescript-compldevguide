@@ -7,12 +7,12 @@ import { Attributes } from "./Attributes"
 import { Collection } from "./Collection"
 
 export class User extends Model<UserProps> {
-	static build = (attrs: UserProps): User => {
-		return new User(new Attributes(attrs), new Eventing(), new Sync("users"))
+	static build = (attrs: UserProps, sync: Sync<UserProps>): User => {
+		return new User(new Attributes(attrs), new Eventing(), sync)
 	}
 
-	static buildUserCollection = () => {
-		return new Collection(User.validateStatic, User.build)
+	static buildUserCollection = (sync: Sync<UserProps>) => {
+		return new Collection(User.validateStatic, User.build, sync)
 	}
 
 	static validateStatic = (data: unknown) => {

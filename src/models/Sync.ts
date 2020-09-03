@@ -6,6 +6,11 @@ import { ISync } from "../types/internal/ISync"
 
 export class Sync<T extends IHasId> implements ISync<T> {
 	constructor(private resourcePath: string) {}
+
+	get resourcePathValue() {
+		return this.resourcePath
+	}
+
 	fetch = (id: number): AxiosPromise => {
 		return axios
 			.get(`${this.resourcePath}/${id}`, dbConfig)
