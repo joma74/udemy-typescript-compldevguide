@@ -14,15 +14,19 @@
 		"start_tsc": "tsc -w",
 		"start_parcel": "parcel --port $npm_package_config_PARCEL_PORT index.html",
 		"start_db": "json-server --port $npm_package_config_DB_PORT -w db.json",
-		"start": "run-p start_**"
+		"start": "run-p start_**",
+		"build": "parcel build index.html"
 	},
 	"devDependencies": {
 		"@types/node": "^14.6.1",
+		"autoprefixer": "^9.8.6",
 		"http-status-codes": "^2.1.2",
 		"json-server": "^0.16.1",
 		"npm-run-all": "^4.1.5",
 		"parcel": "^1.12.4",
+		"postcss": "^7.0.32",
 		"prettier-plugin-jsdoc": "^0.1.2",
+		"tailwindcss": "^1.7.6",
 		"ts-node": "^9.0.0",
 		"typescript": "^4.0.2",
 		"typescript-json-validator": "^2.4.2"
