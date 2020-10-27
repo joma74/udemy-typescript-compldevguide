@@ -1,5 +1,18 @@
 # User Management App
 
+## Let CSS pierce globally through with LitElement
+
+See NonShadowLitElement
+
+## Convince prettier to HTML Tags display:inline
+
+```html
+		<!-- display: inline --><div
+			class="inline-block mt-2 pl-1 w-1/4 text-gray-700"
+			>Name</div
+		><!-- display: inline --><div class="in...
+```
+
 ## Rest Conventions
 
 <img src="./docs/RESTConventions.png" alt="REST word and parameter conventions"
