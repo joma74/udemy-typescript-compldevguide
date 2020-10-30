@@ -1,7 +1,5 @@
 import { Event } from "./Event"
-import { IEventing } from "../types/internal/IEventing"
-
-type Callback = (e: Event) => void
+import { Callback, IEventing } from "../types/internal/IEventing"
 
 export class Eventing implements IEventing {
 	events: { [key: string]: Callback[] } = {}
@@ -30,6 +28,21 @@ export class Eventing implements IEventing {
 		if (handlers && handlers.length > 0) {
 			handlers.forEach((callback) => {
 				callback(e)
+			})
+		}
+	}
+
+	/**
+	 * NOTE
+	 * => function captures this
+	 *
+	 * @param eventName
+	 */
+	triggerError = (e: Event, error: Error): void => {
+		const handlers = this.events[e]
+		if (handlers && handlers.length > 0) {
+			handlers.forEach((callback) => {
+				callback(e, error)
 			})
 		}
 	}

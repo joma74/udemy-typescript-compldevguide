@@ -40,7 +40,7 @@ export function hasKey<O>(obj: O, key: PropertyKey): key is keyof O {
  * at runtime by returning.
  *
  * This function uses the `Object.prototype.hasOwnProperty` function for it's runtime assertion,
- * which does not include any property on the prototype chain.
+ * which does NOT include any property on the prototype chain.
  *
  * USAGE
  *

@@ -42,10 +42,23 @@ export abstract class Model<T extends IHasId> {
 	/**
 	 * NOTE
 	 *
+	 * `get` makes sure it is defined after `this.events` have been intialized
+	 */
+	get triggerError() {
+		return this.events.triggerError
+	}
+
+	/**
+	 * NOTE
+	 *
 	 * `get` makes sure it is defined after `this.attributes` have been intialized
 	 */
 	get get() {
 		return this.attributes.getByVariableKey
+	}
+
+	get getAll() {
+		return this.attributes.getAll
 	}
 
 	set = (update: T) => {
@@ -63,7 +76,7 @@ export abstract class Model<T extends IHasId> {
 				})
 				.catch((e) => {
 					console.log(e)
-					this.trigger(Event.ERROR)
+					this.triggerError(Event.ERROR, e)
 				})
 		} else {
 			throw new Error("Can not fetch without an id")

@@ -1,39 +1,39 @@
 import { html, property } from "lit-element"
 import { store } from "../store"
+import { NonShadowLitElement } from "./NonShadowLitElement"
 import { connect } from "pwa-helpers"
 import { AppState } from "../store/types"
-import { NonShadowLitElement } from "./NonShadowLitElement"
 
-export class UserInfo extends connect(store)(NonShadowLitElement) {
+export class MessageBox extends connect(store)(NonShadowLitElement) {
 	@property()
-	name = "???"
+	uiState = ""
 
-	@property({ type: Number })
-	age = -1
+	@property()
+	message = ""
 
-	stateChanged(store: AppState) {
-		this.name = store.data.theUser?.name || "xxx"
-		this.age = store.data.theUser?.age || 1
+	stateChanged(state: AppState) {
+		this.uiState = state.uiState
+		this.message = state.message
 	}
 
 	render() {
 		return html`<div class="m-2 p-5 bg-gray-100 rounded shadow-xl text-sm">
 			<h1 class="text-gray-800 font-medium underline bg-yellow-300">
-				User Information
+				Message Box
 			</h1>
 			<!-- display: inline --><div
 				class="inline-block mt-2 pl-1 w-1/4 text-gray-700"
-				>Name</div
+				>UI State</div
 			><!-- display: inline --><div class="inline-block mt-2 w-3/4"
-				>${this.name}</div
+				>${this.uiState}</div
 			><!-- display: inline --><div
 				class="inline-block mt-2 pl-1 text-gray-700 w-1/4"
-				>Age</div
+				>Message</div
 			><!-- display: inline --><div class="inline-block mt-2 w-3/4"
-				>${this.age}</div
+				>${this.message}</div
 			>
 		</div>`
 	}
 }
 
-customElements.define("user-info", UserInfo)
+customElements.define("message-box", MessageBox)
